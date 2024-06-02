@@ -1,7 +1,6 @@
 package com.gastrolab.demo.controller;
 
 import com.gastrolab.demo.model.Reservation;
-import com.gastrolab.demo.service.ReservationService;
 import com.gastrolab.demo.service.impl.ReservationServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -10,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 @RestController
@@ -24,6 +22,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+   //Não utilizado no momento - ** Confirmação é feita no front-end
     @PutMapping("/confirm/{reservationId}")
     public ResponseEntity<String> confirmReservation(@PathVariable("reservationId") Long reservationId) {
         try {
@@ -50,8 +49,6 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data e hora indisponíveis");
         } else {
             reservationService.create(reservation);
-          //  logger.info("teste -> "  + reservation.getDateTime());
-          //  logger.info("teste -> "  + dateTime);
             return ResponseEntity.status(HttpStatus.OK).body("Agendamento criado!");
         }
     }

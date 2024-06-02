@@ -2,51 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Form</title>
-    <!-- Bootstrap CSS -->
+    <title>GastroLab - Reservas</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            padding-top: 0px;
-            padding-bottom: 40px;
-            background-color: #e1e3e5; /* Fundo azul */
-        }
-        .container-fluid {
-            padding-left: 0;
-            padding-right: 0;
-        }
-        .logo {
-            background-color: #2f344f; /* Fundo branco para o logo */
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%; /* Faz o logo ocupar toda a largura da tela */
-            border-radius: 2px;
-        }
-        .table-container {
-            background-color: #fff; /* Fundo branco para a tabela */
-            padding: 20px;
-            border-radius: 5px; /* Bordas arredondadas para a tabela */
-            max-width: 1200px;
-            margin: 0 auto; /* Centraliza a tabela */
-        }
-        .table {
-            margin-bottom: 0; /* Remove a margem inferior da tabela */
-        }
-
-        .logo h2 {
-            color: #fff; /* Cor branca para o texto do logo */
-        }
-        .logo img {
-            max-width: 75px;
-        }
-
-        .reservation-management {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #414b64;
-        }
-    </style>
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
 <div class="container-fluid">
@@ -84,13 +42,68 @@
                     </select>
                 </td>
             </tr>
-            <!-- Add more rows as needed -->
             </tbody>
         </table>
     </div>
 </div>
-<!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    function createTableRow(reservation) {
+        return `
+            <tr>
+                <td>${reservation.customerName}</td>
+                <td>${reservation.numberOfPeople}</td>
+                <td>${reservation.date}</td>
+                <td>${reservation.time}</td>
+                <td>${reservation.contactInfo}</td>
+                <td>
+                    <select class="status" data-reservation-id="${reservation.id}">
+                        <option value="CONFIRMADO" ${reservation.status === 'CONFIRMADO' ? 'selected' : ''}>CONFIRMADO</option>
+                        <option value="PENDENTE" ${reservation.status === 'PENDENTE' ? 'selected' : ''}>PENDENTE</option>
+                        <option value="CANCELADO" ${reservation.status === 'CANCELADO' ? 'selected' : ''}>CANCELADO</option>
+                    </select>
+                </td>
+            </tr>
+        `;
+    }
+
+    function fillTable(reservations) {
+        const tableBody = document.querySelector('.table tbody');
+        tableBody.innerHTML = reservations.map(createTableRow).join('');
+
+        document.querySelectorAll('.status').forEach(function(select) {
+            select.addEventListener('change', function() {
+                console.log('Status changed');
+                var reservationId = this.getAttribute('data-reservation-id');
+                var newStatus = this.value;
+
+                var updatedReservation = {
+                    status: newStatus
+                };
+
+                fetch('/reservation/update/' + reservationId, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedReservation)
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    }
+
+    fetch('/reservation/info')
+        .then(response => response.json())
+        .then(fillTable)
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+</script>
 </body>
 </html>

@@ -18,7 +18,7 @@ public class InsertConfiguration {
                     "16/04/2024", // Data da reserva (atual)
                     "16:30", // Hora da reserva (atual)
                     "joao@example.com", // Informações de contato
-                    "Confirmada" // Status da reserva
+                    "PENDENTE" // Status da reserva
             );
             reservationRepository.save(reservation);
         };

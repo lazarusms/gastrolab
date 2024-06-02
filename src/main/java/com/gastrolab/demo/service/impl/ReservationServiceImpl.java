@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -36,15 +37,24 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation clientUpdateReservation(Long appointmentId, Reservation updatedAppointment) {
-        return null;
+    public Reservation clientUpdateReservation(Long reservationId, Reservation updatedReservation) {
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new IllegalStateException("O agendamento com o id " + reservationId + " não existe"));
+        updateStatus(reservation, updatedReservation.getStatus());
+        reservationRepository.save(reservation);
+        return reservation;
+    }
+    public void updateStatus(Reservation reservation, String newStatus) {
+        if (newStatus != null && !Objects.equals(reservation.getStatus(), newStatus)) {
+            reservation.setStatus(newStatus);
+        }
     }
 
+    //Não implementado - Sem necessidade para o projeto (Usar STATUS = CANCELADO)
     @Override
     public void deleteReservationById(Long id) {
 
     }
-
+    //Não implementado - Sem necessidade para o projeto
     @Override
     public List<Reservation> findAllClientReservationByDate(LocalDateTime startDate, LocalDateTime endDate) {
         return null;
