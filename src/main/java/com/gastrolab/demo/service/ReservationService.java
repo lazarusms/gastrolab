@@ -13,7 +13,7 @@ public interface ReservationService {
     Reservation clientUpdateReservation(Long appointmentId, Reservation updatedAppointment);
     void deleteReservationById(Long id);
     List<Reservation> findAllClientReservationByDate(LocalDateTime startDate, LocalDateTime endDate);
-    boolean isDateTimeAvailable(LocalDateTime dateTime);
+    boolean isDateTimeAvailable(String date, String time);
 
 
 }

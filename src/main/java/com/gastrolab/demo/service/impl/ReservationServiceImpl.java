@@ -21,8 +21,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation create(Reservation appointment) {
-        return null;
+    public Reservation create(Reservation reservation) {
+        return reservationRepository.save(reservation);
     }
 
     @Override
@@ -58,8 +58,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public boolean isDateTimeAvailable(LocalDateTime dateTime) {
-        Optional<Reservation> existingReservation = reservationRepository.findReservationByDateTime(dateTime);
-        return existingReservation.isEmpty();
+    public boolean isDateTimeAvailable(String date, String time) {
+        return reservationRepository.findAll().stream().noneMatch(reservation -> reservation.getDate().equals(date) && reservation.getTime().equals(time));
     }
 }

@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    @Query("SELECT a FROM Reservation a WHERE a.dateTime BETWEEN :startDate AND :endDate")
-    List<Reservation> findAllClientReservationByDate(
-            @Param("startDate") LocalDateTime startDate,
-            @Param("endDate") LocalDateTime endDate
-    );
+   // @Query("SELECT a FROM Reservation a WHERE a.dateTime BETWEEN :startDate AND :endDate")
+   // List<Reservation> findAllClientReservationByDate(
+   ////        @Param("startDate") LocalDateTime startDate,
+    //          @Param("endDate") LocalDateTime endDate
+    //   );
 
-    @Query("SELECT a FROM Reservation a WHERE a.dateTime = :dateTime")
-    Optional<Reservation> findReservationByDateTime(@Param("dateTime") LocalDateTime dateTime);
+    //   @Query("SELECT a FROM Reservation a WHERE a.dateTime = :dateTime")
+    //  Optional<Reservation> findReservationByDateTime(@Param("dateTime") LocalDateTime dateTime);
 
 
 

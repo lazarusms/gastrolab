@@ -44,16 +44,14 @@ public class ReservationController {
 
     @PostMapping(path = "/register")
     public ResponseEntity<String> registerReservation(@RequestBody Reservation reservation) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(reservation.getDateTimeAsString(), formatter);
 
-        boolean isAvailable = reservationService.isDateTimeAvailable(dateTime);
+        boolean isAvailable = reservationService.isDateTimeAvailable(reservation.getDate(), reservation.getTime());
         if (!isAvailable) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data e hora indisponíveis");
         } else {
             reservationService.create(reservation);
-            logger.info("teste -> "  + reservation.getDateTime());
-            logger.info("teste -> "  + dateTime);
+          //  logger.info("teste -> "  + reservation.getDateTime());
+          //  logger.info("teste -> "  + dateTime);
             return ResponseEntity.status(HttpStatus.OK).body("Agendamento criado!");
         }
     }
@@ -95,3 +93,5 @@ public class ReservationController {
     }
 
 }
+
+

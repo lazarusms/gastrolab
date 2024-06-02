@@ -6,9 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDateTime;
-
-
 @Configuration
 public class InsertConfiguration {
     @Bean
@@ -18,13 +15,12 @@ public class InsertConfiguration {
                     1L, // ID da reserva
                     "João", // Nome do cliente
                     4, // Número de pessoas
-                    LocalDateTime.now(), // Data e hora da reserva (atual)
+                    "16/04/2024", // Data da reserva (atual)
+                    "16:30", // Hora da reserva (atual)
                     "joao@example.com", // Informações de contato
-                    "Sem restrições especiais", // Solicitações especiais
                     "Confirmada" // Status da reserva
             );
             reservationRepository.save(reservation);
-
         };
     }
-    }
+}

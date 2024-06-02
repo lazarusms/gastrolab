@@ -2,12 +2,11 @@ package com.gastrolab.demo.model;
 
 import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 
 @Entity
-@SequenceGenerator(name = "appointment_sequence", sequenceName = "SQ_APPOINT", allocationSize = 1)
+@SequenceGenerator(name = "reservation_sequence", sequenceName = "SQ_APPOINT", allocationSize = 1)
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_sequence")
@@ -15,22 +14,22 @@ public class Reservation {
     @NotBlank(message = "Customer name is required")
     private String customerName;
     private int numberOfPeople;
-    @NotBlank(message = "Date and time is required")
-    private LocalDateTime dateTime;
+    private String date;
+    private String time;
     @NotBlank(message = "Contact information is required")
     private String contactInfo;
-    private String specialRequests;
     private String status;
 
     public Reservation() {
     }
-    public Reservation(Long id, String customerName, int numberOfPeople, LocalDateTime dateTime, String contactInfo, String specialRequests, String status) {
+
+    public Reservation(Long id, String customerName, int numberOfPeople, String date, String time, String contactInfo, String status) {
         this.id = id;
         this.customerName = customerName;
         this.numberOfPeople = numberOfPeople;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.contactInfo = contactInfo;
-        this.specialRequests = specialRequests;
         this.status = status;
     }
 
@@ -40,10 +39,6 @@ public class Reservation {
 
     public Long getId() {
         return id;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
     }
 
     public String getCustomerName() {
@@ -58,16 +53,19 @@ public class Reservation {
         return contactInfo;
     }
 
-    public String getSpecialRequests() {
-        return specialRequests;
+    public String getDate() {
+        return date;
     }
 
-    public String getDateTimeAsString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return dateTime.format(formatter);
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
