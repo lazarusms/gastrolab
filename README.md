@@ -47,5 +47,7 @@ $ cd gastrolab-mobile
 # Rode o emulador
 # A maneira mais simples de fazer isso é executando o projeto no Android Studio - O projeto é configurado para se conectar ao localhost do emulador
 ```
-
+<div align="center">
+  <img src="https://github.com/lazarusms/gastrolab-mobile/assets/107807531/885bcd46-6a4e-46d7-b429-1eb1e38f861f" alt="image">
+</div>
 
