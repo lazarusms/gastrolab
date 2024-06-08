@@ -4,6 +4,7 @@ IMAGE_NAME = gastrolab
 CONTAINER_NAME = gastrolab-container
 
 build:
+	mvn clean package
 	docker build -t $(IMAGE_NAME) .
 
 run:
